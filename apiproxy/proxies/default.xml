@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <PreFlow name="PreFlow">
+        <Request/>
+        <Response/>
+    </PreFlow>
+    <Flows>
+        <Flow name="GetAccessToken">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>GenerateOAuthToken</Name>
+                </Step>
+                <Step>
+                    <Name>Remove-params</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/GetAccessToken") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="ValidatePartnerRecharge">
+            <Description>Validate Partner Recharge</Description>
+            <Request>
+                <Step>
+                    <Name>VerifyOAuthToken</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/ValidatePartnerRecharge") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="ConfirmPartnerRecharge">
+            <Description>Confirm Partner Recharge</Description>
+            <Request>
+                <Step>
+                    <Name>VerifyOAuthToken</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/ConfirmPartnerRecharge") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="QueryPartnerBalanceInfo">
+            <Description>QueryPartnerBalanceInfo</Description>
+            <Request>
+                <Step>
+                    <Name>VerifyOAuthToken</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/QueryPartnerBalanceInfo") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="QueryPartnerTransactionInfo">
+            <Description>QueryPartnerTransactionInfo</Description>
+            <Request>
+                <Step>
+                    <Name>VerifyOAuthToken</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/QueryPartnerTransactionInfo") and (request.verb = "POST")</Condition>
+        </Flow>
+    </Flows>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <HTTPProxyConnection>
+        <BasePath>/v1/axiom</BasePath>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="default">
+        <TargetEndpoint>default</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>
